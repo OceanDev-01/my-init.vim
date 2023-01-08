@@ -48,9 +48,6 @@ let g:airline#extensions#tabline#enabled = 1	"muestra la linea de pestaña en la
 let g:airline#extensions#tabline#formatter = 'unique_tail'	"muestra solo el nombre del archivo que estamos modificando
 let g:airline_theme='onedark'	"el tema de airline
 
-"configuracion de vimwiki
-let g:vimwiki_list = [{'path': '/AppData/Local/nvim/vimwiki',
-			\ 'syntax': 'markdown', 'ext': '.md'}]
 
 "configuracion de nerdtree
 "mapeando el abrir y cerrar de nerdtree con nerdtreetoggle vemos los archivos en el arbol y podemos cerrarlo a la vez, map es la C mayuscula representa el
@@ -58,37 +55,36 @@ let g:vimwiki_list = [{'path': '/AppData/Local/nvim/vimwiki',
 map <C-n> :NERDTreeToggle<CR>
 
 
-
 "configuracion por defecto de coc
-" TextEdit might fail if hidden is not set.
+" TextEdit fallara si no se establece hidden.
 set hidden
 
-" Some servers have issues with backup files, see #649.
+" Algunos servidores tienen problemas con los archivos de copia de seguridad, véase #649.
 set nobackup
 set nowritebackup
 
-" Give more space for displaying messages.
+" Ofrece más espacio para mostrar mensajes.
 set cmdheight=2
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+" Si el tiempo de actualización es más largo (por defecto es 4000 ms = 4 s), se notarán más 
+" retrasos y una mala experiencia de usuario.
 set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
+" No pasa mensajes a |ins-completion-menu|.
 set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
+" Mostrar siempre la columna de signos, de lo contrario se desplazaría el texto
+" cada vez que aparezcan/se resuelvan diagnósticos.
 if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
+  " Neovim fusiona la columna de signos y la columna de números en una sola.
   set signcolumn=number
 else
   set signcolumn=yes
 endif
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
+" Utiliza el tabulador para completar el disparo con caracteres por delante y navegar.
+" NOTA: Usa el comando ':verbose imap <tab>' para asegurarte de que el tabulador no está mapeado por
+" otro plugin antes de poner esto en la configuración.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -100,30 +96,30 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
+" Usa <c-space> para activar la finalización.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
+" Hacer <CR> auto-seleccionar el primer elemento de finalización y notifica coc.nvim a
+" al entrar, <cr> podría ser reasignado por otro plugin de vim.
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" Usa `[g` and `]g` para navegar por los diagnósticos
+" Usa `:CocDiagnostics` para obtener todos los diagnósticos del buffer actual en la lista de ubicaciones.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" GoTo code navigation.
+" Navegación por el código GoTo.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window.
+" Usa K para mostrar la documentación en la ventana de vista previa.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -136,36 +132,36 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight the symbol and its references when holding the cursor.
+" Resalta el símbolo y sus referencias cuando se mantiene el cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Symbol renaming.
+" Renombrar símbolos.
 nmap <leader>rn <Plug>(coc-rename)
 
-" Formatting selected code.
+" Dar formato al código seleccionado.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
-  " Setup formatexpr specified filetype(s).
+  " Configurar formateo xpr tipo(s) de archivo(s) especificado(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
+  " Actualiza la ayuda de firma en marcador de posición de salto.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
+" Aplica codeAction a la región seleccionada.
+" Ejemplo: `<leader>aap` para el párrafo actual
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap keys for applying codeAction to the current buffer.
+" Reasigna teclas para aplicar codeAction al buffer actual.
 nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
+" Aplica AutoFix al problema en la línea actual.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+" Función Map y objetos de texto de clase
+" NOTA: Requiere soporte 'textDocument.documentSymbol' del servidor de idiomas.
 xmap if <Plug>(coc-funcobj-i)
 omap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
@@ -175,53 +171,53 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-" Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
+" Reasignar <C-f> y <C-b> para ventanas flotantes de desplazamiento/ventanas emergentes.
+" Nota coc#float#scroll funciona en neovim >= 0.4.0 o vim >= 8.2.0750
 nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
 inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 
-" NeoVim-only mapping for visual mode scroll
-" Useful on signatureHelp after jump placeholder of snippet expansion
+" Asignación exclusiva de NeoVim para el desplazamiento en modo visual
+" Útil en la firma, ayuda después del salto del marcador de posición de expansión fragmento
 if has('nvim')
   vnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#nvim_scroll(1, 1) : "\<C-f>"
   vnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#nvim_scroll(0, 1) : "\<C-b>"
 endif
 
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of language server.
+" Usa CTRL-S para los rangos de selección.
+" Requiere el soporte 'textDocument/selectionRange' del servidor de idiomas.
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
-" Add `:Format` command to format current buffer.
+" Añade el comando `:Format` para formatear el buffer actual.
 command! -nargs=0 Format :call CocAction('format')
 
 " Add `:Fold` command to fold current buffer.
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" Add `:OR` command for organize imports of the current buffer.
+" Añade el comando `:Fold` para plegar el buffer actual.
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
+" Añade el soporte nativo de la línea de estado de (Neo)Vim.
+" NOTA: Por favor, mira `:h coc-status` para integraciones con plugins externos que
+" proporcionan líneas de estado personalizadas: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Mappings for CoCList
-" Show all diagnostics.
+" Asignaciones para CoCList
+" Muestra todos los diagnósticos.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
+" Gestiona extensiones.
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
-" Show commands.
+" Muestra los comandos.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document.
+" Busca el símbolo del documento actual.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols.
+" Busca los símbolos del espacio de trabajo.
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
+" Realiza la acción por defecto para el siguiente elemento.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
+" Realiza la acción por defecto para el elemento anterior.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
+" Reanudar la última lista de coc.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
