@@ -19,6 +19,7 @@ call plug#begin('~/AppData/Local/nvim/plugged') 	"directorio donde se van a inst
 
 "plugins
 Plug 'joshdick/onedark.vim' 		  "tema
+Plug 'cesaralvarod/tokyogogh.nvim', {'branch': 'main'}        "tema
 Plug 'Yggdroot/indentLine' 		    "indentacion
 Plug 'mattn/emmet-vim' 			      "emmet para diseño web
 Plug 'vim-airline/vim-airline'		"diseño de la barra en la cual se muestran los modos, la linea, etc.
@@ -36,8 +37,13 @@ call plug#end() 			"cerramos el llamado de los plugins
 
 "configuracion del tema
 set termguicolors 			"activa el true color en la terminal
-colorscheme onedark 			"activar el tema onedark
+colorscheme tokyogogh 			"activar el tema onedark
 
+require('tokyogogh').setup {
+  style = 'storm' -- storm | night
+}
+
+vim.cmd([[colorscheme tokyogogh]])
 
 "configuracion de emmet-vim
 let g:user_emmet_leader_key=',' 	"mapeando la tecla lider por una coma, con esto se completa los tag con doble coma.
